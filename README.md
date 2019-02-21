@@ -6,7 +6,7 @@ A minimum preemptive OS on Cortex-M3 (specially on blue-pill board) written in R
 
 > In computing, preemption is the act of temporarily interrupting a task being carried out by a computer system, without requiring its cooperation, and with the intention of resuming the task at a later time. Such changes of the executed task are known as context switches.   ----  Wikipedia
 
-In breif, the kernel of non-preemptive OS can not interrupting a task, while the kernel of preemptive OS can take the control back without informing the task.
+In breif, the kernel of non-preemptive OS can not interrupt a task, while the kernel of preemptive OS can take the control back without informing the task.
 
 ## Build and Run
 
