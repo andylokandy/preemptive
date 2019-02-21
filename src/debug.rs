@@ -9,6 +9,28 @@ pub unsafe extern "C" fn panic_fmt(info: &PanicInfo) -> ! {
     loop {}
 }
 
+#[naked]
+pub unsafe extern "C" fn hard_fault_handler() {
+    let faulting_stack: *mut u32;
+    let _kernel_stack: bool;
+
+    asm!(
+    "mov    r1, 0                       \n\
+     tst    lr, #4                      \n\
+     itte   eq                          \n\
+     mrseq  r0, msp                     \n\
+     addeq  r1, 1                       \n\
+     mrsne  r0, psp                     "
+    : "={r0}"(faulting_stack), "={r1}"(_kernel_stack)
+    :
+    : "r0", "r1"
+    : "volatile"
+    );
+
+    kernel_hardfault(faulting_stack);
+}
+
+/// Prints hardfault information via serial interface
 #[inline(never)]
 unsafe fn kernel_hardfault(faulting_stack: *mut u32) {
     use core::intrinsics::offset;
@@ -141,27 +163,6 @@ unsafe fn kernel_hardfault(faulting_stack: *mut u32) {
         bfarvalid,
         bfar
     );
-}
-
-#[naked]
-pub unsafe extern "C" fn hard_fault_handler() {
-    let faulting_stack: *mut u32;
-    let _kernel_stack: bool;
-
-    asm!(
-    "mov    r1, 0                       \n\
-     tst    lr, #4                      \n\
-     itte   eq                          \n\
-     mrseq  r0, msp                     \n\
-     addeq  r1, 1                       \n\
-     mrsne  r0, psp                     "
-    : "={r0}"(faulting_stack), "={r1}"(_kernel_stack)
-    :
-    : "r0", "r1"
-    : "volatile"
-    );
-
-    kernel_hardfault(faulting_stack);
 }
 
 pub fn ipsr_isr_number_to_str(isr_number: usize) -> &'static str {

@@ -1,6 +1,7 @@
 use core::fmt::{Error, Write};
 use stm32f103xx;
 
+/// Initialize usart2
 pub fn usart_init(
     rcc: &mut stm32f103xx::RCC,
     gpioa: &mut stm32f103xx::GPIOA,

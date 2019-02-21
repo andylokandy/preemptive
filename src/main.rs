@@ -52,8 +52,8 @@ fn main() -> ! {
 
     // main dispatcher loop
     loop {
-        process_task1.switch_to_user();
-        process_task2.switch_to_user();
+        process_task1.switch_to_task();
+        process_task2.switch_to_task();
     }
 }
 

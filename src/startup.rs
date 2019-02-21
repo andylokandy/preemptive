@@ -1,5 +1,5 @@
-use crate::switch_context::{svc_handler, systick_handler};
 use crate::debug::hard_fault_handler;
+use crate::switch_context::{svc_handler, systick_handler};
 
 extern "C" {
     static mut _sidata: u32;
@@ -9,34 +9,30 @@ extern "C" {
     static mut _ebss: u32;
 }
 
+// interrupt vertor that will be linked to the very start of .text section
 #[link_section = ".isr_vector"]
 #[used]
 pub static ISR_VECTOR: [unsafe extern "C" fn(); 15] = [
     reset_handler,
     unhandled_interrupt, // NMI
-    hard_fault_handler, // Hard Fault
-    unhandled_interrupt2, // MemManage
-    unhandled_interrupt2, // BusFault
-    unhandled_interrupt2, // UsageFault
-    unhandled_interrupt2,
-    unhandled_interrupt2,
-    unhandled_interrupt2,
-    unhandled_interrupt2,
-    svc_handler,          // SVC
-    unhandled_interrupt2, // DebugMon
-    unhandled_interrupt2,
-    unhandled_interrupt2, // PendSV
+    hard_fault_handler,  // Hard Fault
+    unhandled_interrupt, // MemManage
+    unhandled_interrupt, // BusFault
+    unhandled_interrupt, // UsageFault
+    unhandled_interrupt,
+    unhandled_interrupt,
+    unhandled_interrupt,
+    unhandled_interrupt,
+    svc_handler,         // SVC
+    unhandled_interrupt, // DebugMon
+    unhandled_interrupt,
+    unhandled_interrupt, // PendSV
     systick_handler,     // SysTick
 ];
 
-unsafe extern "C" fn unhandled_interrupt() {
-    loop {}
-}
-
-unsafe extern "C" fn unhandled_interrupt2() {
-    loop {}
-}
-
+/// Main entry
+/// 
+/// It's where the whole system starts
 #[no_mangle]
 pub unsafe extern "C" fn reset_handler() {
     init_data(&mut _sidata, &mut _sdata, &mut _edata);
@@ -58,4 +54,8 @@ unsafe fn zero_bss(mut sbss: *mut u32, ebss: *mut u32) {
         sbss.write_volatile(0);
         sbss = sbss.offset(1);
     }
+}
+
+unsafe extern "C" fn unhandled_interrupt() {
+    loop {}
 }
