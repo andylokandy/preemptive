@@ -80,8 +80,8 @@ pub unsafe extern "C" fn svc_handler() {
 
 /// Switch context to kernel in fixed period
 /// 
-/// It's is important for the kernel to get control back sometime
-/// so as to dispatch other tasks. This is what `preemptive` means. 
+/// It's is important for the kernel to get the control back sometimes
+/// so as to dispatch to other tasks. This is what `preemptive` means. 
 #[no_mangle]
 #[naked]
 pub unsafe extern "C" fn systick_handler() {

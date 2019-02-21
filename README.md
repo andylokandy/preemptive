@@ -1,12 +1,18 @@
 # Preemptive-rs
 
-A minimum preemptive os on Cortex-M3 (specially on blue-pill board) written in Rust. It is for the purpose of researching and showing how the fundamental runtime of Cortex-M3 works.
+A minimum preemptive OS on Cortex-M3 (specially on blue-pill board) written in Rust. It is for the purpose of researching and showing how the fundamental runtime of Cortex-M3 works.
+
+## What is preemptive OS
+
+> In computing, preemption is the act of temporarily interrupting a task being carried out by a computer system, without requiring its cooperation, and with the intention of resuming the task at a later time. Such changes of the executed task are known as context switches.   ----  Wikipedia
+
+In breif, the kernel of non-preemptive OS can not interrupting a task, while the kernel of preemptive OS can take the control back without informing the task.
 
 ## Build and Run
 
-- Firstly, make sure you have `arm-none-eabi` toolchain and `openocd` installed on your platform.
+- Make sure you have `arm-none-eabi` toolchain and `openocd` installed on your platform.
 
-- Then connect pin `PA2` to a serial reciever, with 115200 baudrate, 8 data bits, 1 stop bits. no parity, no flow control.
+- Connect pin `PA2` to a serial reciever, with 115200 baudrate, 8 data bits, 1 stop bits, no parity and no flow control.
 
 - Compile the application:
 ```
@@ -47,10 +53,10 @@ Executing task1!
 Executing task2!
 Executing task1!
 Executing task2!
+...
 ```
 
-## Structure
+## Reference
 
-Preemptive-rs is consists of a few modules:
-
-[WIP]
+- mini-arm-os (https://github.com/jserv/mini-arm-os)
+- tock os (https://github.com/tock/tock)
