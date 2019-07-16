@@ -16,7 +16,7 @@ In breif, the kernel of non-preemptive OS can not interrupt a task, while the ke
 
 ## Project Structure
 
-This project is collections of several stages of building a preliminary preemptive OS from sketch. The `Final` folder contains the final version we want to build step by step. I'll make sure every code in each chapter can be compiled and run on `blue-pill`.
+This project is collections of several stages of building a preliminary preemptive OS from sketch. The `Final` folder contains the final version we build up step by step. I'll make sure every code in each chapter can be compiled and run on `blue-pill`.
 
 ## Build and Run
 
