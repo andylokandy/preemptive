@@ -1,6 +1,12 @@
 #![no_std]
 #![no_main]
-#![feature(asm, const_fn, naked_functions, core_intrinsics, panic_info_message)]
+#![feature(
+    asm,
+    const_fn,
+    naked_functions,
+    core_intrinsics,
+    panic_info_message
+)]
 
 mod debug;
 mod led;
@@ -11,6 +17,7 @@ mod systick;
 mod usart;
 
 use core::fmt::Write;
+use core::panic::PanicInfo;
 use cortex_m;
 use stm32f103xx;
 use switch_context::Process;
@@ -98,4 +105,11 @@ fn is_prime(n: u32) -> bool {
             .step_by(6)
             .all(|x| n % x != 0 && n % (x + 2) != 0)
     }
+}
+
+#[panic_handler]
+pub unsafe extern "C" fn panic_fmt(info: &PanicInfo) -> ! {
+    write!(USART, "{}", info.message().unwrap()).unwrap();
+
+    loop {}
 }

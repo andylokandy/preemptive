@@ -1,14 +1,3 @@
-use crate::usart::USART;
-use core::fmt::Write;
-use core::panic::PanicInfo;
-
-#[panic_handler]
-pub unsafe extern "C" fn panic_fmt(info: &PanicInfo) -> ! {
-    write!(USART, "{}", info.message().unwrap());
-
-    loop {}
-}
-
 #[naked]
 pub unsafe extern "C" fn hard_fault_handler() {
     let faulting_stack: *mut u32;
@@ -174,13 +163,13 @@ pub fn ipsr_isr_number_to_str(isr_number: usize) -> &'static str {
         4 => "MemManage",
         5 => "BusFault",
         6 => "UsageFault",
-        7...10 => "Reserved",
+        7..=10 => "Reserved",
         11 => "SVCall",
         12 => "Reserved for Debug",
         13 => "Reserved",
         14 => "PendSV",
         15 => "SysTick",
-        16...255 => "IRQn",
+        16..=255 => "IRQn",
         _ => "(Unknown! Illegal value?)",
     }
 }
