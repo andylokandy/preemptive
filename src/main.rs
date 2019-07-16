@@ -1,13 +1,6 @@
 #![no_std]
 #![no_main]
-#![feature(
-    asm,
-    const_fn,
-    try_from,
-    naked_functions,
-    core_intrinsics,
-    panic_info_message
-)]
+#![feature(asm, const_fn, naked_functions, core_intrinsics, panic_info_message)]
 
 mod debug;
 mod led;
@@ -48,33 +41,60 @@ fn main() -> ! {
     // light up
     led::set(true);
 
-    writeln!(USART, "Kernel started!");
+    writeln!(USART, "Kernel started!").unwrap();
 
-    // main dispatcher loop
+    // main dispatch loop
     loop {
+        writeln!(USART, "Entering task1!").unwrap();
         process_task1.switch_to_task();
+        writeln!(USART, "Entering task2!").unwrap();
         process_task2.switch_to_task();
     }
 }
 
 #[no_mangle]
 fn task1() -> ! {
+    let mut n = 0;
     loop {
-        writeln!(USART, "Executing task1!");
-        delay();
+        writeln!(USART, "fib({})={}", n, fib(n)).unwrap();
+        n += 1;
     }
 }
 
 #[no_mangle]
 fn task2() -> ! {
+    let mut n = 0;
     loop {
-        writeln!(USART, "Executing task2!");
-        delay();
+        writeln!(USART, "is_prime({})={}", n, is_prime(n)).unwrap();
+        n += 1;
     }
 }
 
-pub fn delay() {
-    for _ in 0..1000000 {
-        cortex_m::asm::nop();
+#[no_mangle]
+fn fib(n: u32) -> u32 {
+    let mut a = 1;
+    let mut b = 1;
+    let mut result = 0;
+
+    for _ in 3..n + 1 {
+        result = a + b;
+        a = b;
+        b = result;
+    }
+
+    result
+}
+
+#[no_mangle]
+fn is_prime(n: u32) -> bool {
+    if n == 2 || n == 3 {
+        true
+    } else if n % 6 != 1 && n % 6 != 5 {
+        false
+    } else {
+        let n_sqrt = (1..).take_while(|x| x * x <= n).last().unwrap();
+        (5..n_sqrt + 1)
+            .step_by(6)
+            .all(|x| n % x != 0 && n % (x + 2) != 0)
     }
 }
