@@ -39,7 +39,6 @@ SECTIONS
     .data :
     {
         . = ALIGN(4);
-        _sdata = .;
 
         *(.data)
         *(.data.*)
