@@ -21,6 +21,7 @@ const TASK_STACK_SIZE: usize = 100;
 static mut TASK_STACKS: [[usize; TASK_STACK_SIZE]; TASK_NUM] = [[0; TASK_STACK_SIZE]; TASK_NUM];
 
 #[no_mangle]
+#[inline(never)]
 fn main() -> ! {
     let mut cp = cortex_m::Peripherals::take().unwrap();
     let mut dp = stm32f103xx::Peripherals::take().unwrap();
@@ -45,9 +46,9 @@ fn main() -> ! {
 
     // main dispatch loop
     loop {
-        writeln!(USART, "Entering task1!").unwrap();
+        writeln!(USART, "\nEntering task1!").unwrap();
         process_task1.switch_to_task();
-        writeln!(USART, "Entering task2!").unwrap();
+        writeln!(USART, "\nEntering task2!").unwrap();
         process_task2.switch_to_task();
     }
 }

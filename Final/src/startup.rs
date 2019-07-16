@@ -56,6 +56,7 @@ unsafe fn zero_bss(mut sbss: *mut u32, ebss: *mut u32) {
     }
 }
 
+#[no_mangle]
 unsafe extern "C" fn unhandled_interrupt() {
     loop {}
 }
