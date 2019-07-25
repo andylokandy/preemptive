@@ -82,18 +82,18 @@ pub unsafe extern "C" fn svc_handler() {
 /// Setup task context and switch to it
 ///
 /// This function is doing these few steps:
-/// 1. Preserve registers {r4-r12, lr} into msp (by complier).
-/// 2. Load stack address of task into psp.
-/// 3. Load register backups of task from `process_regs` into {r4-r11}.
-/// 4. Invoke SVC execption, jumping into svc_handler,
+/// 1. Saves registers {r4-r12, lr} into msp (by complier ABI).
+/// 2. Load task stack address into psp.
+/// 3. Restore the register states of task from `process_regs` into {r4-r11}.
+/// 4. Invoke SVC execption in order to jump into svc_handler,
 ///    therefore we switched to task context.
-/// 5. When context is switched back to kernel (by systick_handler or svc execption),
-///    backup registers {r4-r11} into `process_regs`.
-/// 6. Backup new psp into `user_stack`.
-/// 7. Restore registers {r4-r12, lr->pc} from msp (by complier).
+/// 5. Saves registers states {r4-r11} into `process_regs`
+///    when switched back to kernel (by systick_handler or svc_handler),
+/// 6. Restore new psp into `user_stack`.
+/// 7. Restore kernel registers states {r4-r12, lr->pc} from msp (by complier ABI).
 ///
-/// The first step and last step is performed by common ABI calling convention,
-/// so we should ensure that this function is never inlined.
+/// The first step and last step is performed by function call ABI convention,
+/// so we have to ensure this function is never inlined.
 #[inline(never)]
 #[no_mangle]
 pub unsafe extern "C" fn switch_to_task(
