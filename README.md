@@ -21,16 +21,15 @@ the control back without informing the task.
 
 ## Project Structure
 
-This project is collections of several stages of building a preliminary preemptive OS from sketch. The `Final`
-chapter is the final version we build up step by step. I'll make sure all code of each chapter can be
-compiled and run on `blue-pill`.
+This project is collections of several stages of building a preliminary preemptive OS from sketch. I'll make
+sure all code of each chapter can compile and run on `blue-pill`.
 
 ## Build and Run
 
-- Enter `Final`
+- Enter `Chapter5-MultiTasking`
 
 ```text
-cd Final
+cd Chapter5-MultiTasking
 ```
 
 - Connect the `blue-pill` to your laptop.
