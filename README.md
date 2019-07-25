@@ -1,28 +1,35 @@
 # Preemptive-rs
 
-A minimum preemptive OS on Cortex-M3 (specially on blue-pill board) written in Rust. It is for the purpose of researching and showing how the fundamental runtime of Cortex-M3 works.
+A minimum preemptive OS on Cortex-M3 (specially on blue-pill board) written in Rust. It is for the purpose of
+researching and showing how the fundamental runtime of Cortex-M3 works.
 
 ## What is preemptive OS
 
-> In computing, preemption is the act of temporarily interrupting a task being carried out by a computer system, without requiring its cooperation, and with the intention of resuming the task at a later time. Such changes of the executed task are known as context switches.   ----  Wikipedia
+> In computing, preemption is the act of temporarily interrupting a task being carried out by a computer system,
+without requiring its cooperation, and with the intention of resuming the task at a later time. Such changes of
+the executed task are known as context switches.   ----  Wikipedia
 
-In breif, the kernel of non-preemptive OS can not interrupt a task, while the kernel of preemptive OS can take the control back without informing the task.
+In breif, the kernel of non-preemptive OS can not interrupt a task, while the kernel of preemptive OS can take
+the control back without informing the task.
 
 ## Prerequisite
 
 - Make sure you have a `blue-pill` board and a serial port reciever.
 - Make sure you have `arm-none-eabi` toolchain and `openocd` installed on your platform.
-- Install the latest nightly rust toolchain. The compiler version used when this project is beening written is `rustc 1.37.0-nightly (17e62f77f 2019-07-01)`.
+- Install the latest nightly rust toolchain. The compiler version used when this project is beening written is
+`rustc 1.37.0-nightly (17e62f77f 2019-07-01)`.
 
 ## Project Structure
 
-This project is collections of several stages of building a preliminary preemptive OS from sketch. The `Final` folder contains the final version we build up step by step. I'll make sure every code in each chapter can be compiled and run on `blue-pill`.
+This project is collections of several stages of building a preliminary preemptive OS from sketch. The `Final`
+chapter is the final version we build up step by step. I'll make sure all code of each chapter can be
+compiled and run on `blue-pill`.
 
 ## Build and Run
 
 - Enter `Final`
 
-```
+```text
 cd Final
 ```
 
